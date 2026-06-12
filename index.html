@@ -5,12 +5,16 @@
   <title>Neighborhood Internet Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Inline favicon -->
+  <link rel="icon" href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+      <circle cx='50' cy='50' r='45' fill='%234f46e5'/>
+    </svg>">
+
   <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
   />
 
   <!-- MarkerCluster CSS -->
@@ -25,15 +29,17 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">
       <span class="logo-dot"></span>
       <span class="brand-text">Neighborhood Internet Map</span>
     </div>
+
     <div class="topbar-right">
-      <span class="pill pill-green">Live</span>
-      <button id="refresh-btn" class="btn btn-ghost">Refresh data</button>
+      <button id="theme-toggle" class="btn btn-ghost">🌙 Dark</button>
+      <button id="refresh-btn" class="btn btn-ghost">Refresh</button>
     </div>
   </header>
 
@@ -41,40 +47,38 @@
     <section class="left-panel">
       <div class="panel-section">
         <h2>Submit a report</h2>
-        <p class="hint">
-          Click on the map to pick your location, then fill in how your internet feels.
-        </p>
+        <p class="hint">Click the map to set your location.</p>
 
         <form id="report-form" class="form">
           <div class="form-row">
             <label>Download (Mbps)</label>
-            <input type="number" step="0.1" min="0" id="download" required />
+            <input id="download" type="number" step="0.1" required />
           </div>
 
           <div class="form-row">
             <label>Upload (Mbps)</label>
-            <input type="number" step="0.1" min="0" id="upload" required />
+            <input id="upload" type="number" step="0.1" required />
           </div>
 
           <div class="form-row">
             <label>Ping (ms)</label>
-            <input type="number" step="0.1" min="0" id="ping" required />
+            <input id="ping" type="number" step="0.1" required />
           </div>
 
           <div class="form-row">
             <label>Jitter (ms)</label>
-            <input type="number" step="0.1" min="0" id="jitter" required />
+            <input id="jitter" type="number" step="0.1" required />
           </div>
 
           <div class="form-row">
             <label>ISP</label>
-            <input type="text" id="isp" placeholder="AT&T, Xfinity, Sonic..." required />
+            <input id="isp" type="text" required />
           </div>
 
           <div class="form-row">
             <label>Experience</label>
             <select id="rating" required>
-              <option value="">Select one</option>
+              <option value="">Select</option>
               <option value="smooth">Smooth</option>
               <option value="ok">OK</option>
               <option value="bad">Bad</option>
@@ -85,38 +89,39 @@
           <div class="form-row">
             <label>Location</label>
             <div class="location-indicator">
-              <span id="location-status">Click on the map to set location</span>
+              <span id="location-status">Click map to set location</span>
             </div>
           </div>
 
-          <input type="hidden" id="lat" />
-          <input type="hidden" id="lng" />
+          <input id="lat" type="hidden" />
+          <input id="lng" type="hidden" />
 
-          <button type="submit" class="btn btn-primary" id="submit-btn">
-            Submit report
+          <button id="submit-btn" class="btn btn-primary" type="submit">
+            Submit
           </button>
-          <p class="form-message" id="form-message"></p>
+
+          <p id="form-message" class="form-message"></p>
         </form>
       </div>
 
       <div class="panel-section">
-        <h2>Stats (last 200 reports)</h2>
-        <div id="stats" class="stats-grid">
+        <h2>Stats (last 200)</h2>
+        <div class="stats-grid">
           <div class="stat-card">
             <span class="stat-label">Avg download</span>
-            <span class="stat-value" id="stat-download">–</span>
+            <span id="stat-download" class="stat-value">–</span>
           </div>
           <div class="stat-card">
             <span class="stat-label">Avg upload</span>
-            <span class="stat-value" id="stat-upload">–</span>
+            <span id="stat-upload" class="stat-value">–</span>
           </div>
           <div class="stat-card">
             <span class="stat-label">Avg ping</span>
-            <span class="stat-value" id="stat-ping">–</span>
+            <span id="stat-ping" class="stat-value">–</span>
           </div>
           <div class="stat-card">
             <span class="stat-label">Reports</span>
-            <span class="stat-value" id="stat-count">–</span>
+            <span id="stat-count" class="stat-value">–</span>
           </div>
         </div>
       </div>
@@ -139,20 +144,16 @@
 
   <footer class="footer">
     <span>Built with Supabase + Leaflet</span>
-    <span>Data is anonymous and approximate by location. Rates may be inaccurate due to high tech botting.</span>
+    <span>Anonymous, block-level data only</span>
   </footer>
 
   <!-- Leaflet JS -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- MarkerCluster JS -->
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <!-- Supabase JS (ESM via import in app.js) -->
+  <!-- App -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
