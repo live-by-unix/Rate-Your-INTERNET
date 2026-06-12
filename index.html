@@ -31,6 +31,9 @@
 </head>
 
 <body>
+  <!-- ===========================
+       TOPBAR
+  ============================ -->
   <header class="topbar">
     <div class="brand">
       <span class="logo-dot"></span>
@@ -43,8 +46,13 @@
     </div>
   </header>
 
+  <!-- ===========================
+       MAIN LAYOUT
+  ============================ -->
   <main class="layout">
+    <!-- LEFT PANEL -->
     <section class="left-panel">
+      <!-- Submit Report -->
       <div class="panel-section">
         <h2>Submit a report</h2>
         <p class="hint">Click the map to set your location.</p>
@@ -104,8 +112,9 @@
         </form>
       </div>
 
+      <!-- Stats -->
       <div class="panel-section">
-        <h2>Stats (last 200)</h2>
+        <h2>Stats (last 2000)</h2>
         <div class="stats-grid">
           <div class="stat-card">
             <span class="stat-label">Avg download</span>
@@ -126,6 +135,7 @@
         </div>
       </div>
 
+      <!-- Legend -->
       <div class="panel-section">
         <h2>Legend</h2>
         <ul class="legend">
@@ -137,14 +147,58 @@
       </div>
     </section>
 
+    <!-- MAP PANEL -->
     <section class="map-panel">
+
+      <!-- ===========================
+           MAP TOOLBAR 
+      ============================ -->
+      <div class="map-toolbar">
+        <div class="map-toolbar-left">
+          <select id="isp-filter">
+            <option value="">All ISPs</option>
+          </select>
+
+          <select id="rating-filter">
+            <option value="">All experiences</option>
+            <option value="smooth">Smooth</option>
+            <option value="ok">OK</option>
+            <option value="bad">Bad</option>
+            <option value="unusable">Unusable</option>
+          </select>
+
+          <button id="heatmap-toggle" class="btn btn-ghost" data-active="false">
+            Heatmap: Off
+          </button>
+        </div>
+
+        <div class="map-toolbar-right">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search place…"
+            class="search-input"
+          />
+          <button id="search-btn" class="btn btn-ghost">Search</button>
+        </div>
+      </div>
+
+      <!-- MAP -->
       <div id="map"></div>
     </section>
   </main>
 
+  <!-- ===========================
+       FOOTER
+  ============================ -->
   <footer class="footer">
     <span>Built with Supabase + Leaflet</span>
-    <span>Anonymous, block-level data only</span>
+    <span>
+      Anonymous, block-level data only ·
+      <button id="export-btn" class="btn btn-ghost" style="padding:2px 8px;font-size:11px;">
+        Export CSV
+      </button>
+    </span>
   </footer>
 
   <!-- Leaflet JS -->
@@ -152,6 +206,9 @@
 
   <!-- MarkerCluster JS -->
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Heatmap plugin -->
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
   <!-- App -->
   <script type="module" src="app.js"></script>
