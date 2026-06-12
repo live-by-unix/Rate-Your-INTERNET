@@ -136,23 +136,12 @@ function initMap() {
 }
 
 // =======================================
-// FETCH REPORTS
+// FETCH REPORTS (FROM VIEW)
 // =======================================
 async function fetchReports() {
   const { data, error } = await supabase
-    .from("reports")
-    .select(`
-      id,
-      download_mbps,
-      upload_mbps,
-      ping_ms,
-      jitter_ms,
-      isp,
-      rating,
-      created_at,
-      lng:ST_X(location::geometry),
-      lat:ST_Y(location::geometry)
-    `)
+    .from("reports_with_coords")
+    .select("*")
     .order("created_at", { ascending: false })
     .limit(200);
 
@@ -263,7 +252,7 @@ form.addEventListener("submit", async (e) => {
     jitter_ms: parseFloat(jitterInput.value),
     isp: ispInput.value.trim(),
     rating: ratingSelect.value,
-    location: `SRID=4326;POINT(${lng} ${lat})`
+    location: `POINT(${lng} ${lat})`
   };
 
   submitBtn.disabled = true;
